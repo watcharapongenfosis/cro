@@ -16,6 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -113,7 +120,7 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   productInfo: z.string().min(1, "Product information is required"),
   productImage: z.any().optional(),
-  budget: z.coerce.number().min(0, "Budget must be a positive number"),
+  budget: z.string().min(1, "Budget is required"),
   appointmentTime: z.string().min(1, "Please suggest a convenient time"),
   interestedServices: z
     .array(z.string())
@@ -133,7 +140,7 @@ export function CROLeadForm() {
       contactNumber: "",
       email: "",
       productInfo: "",
-      budget: 0,
+      budget: "",
       appointmentTime: "",
       interestedServices: [],
     },
@@ -146,13 +153,19 @@ export function CROLeadForm() {
       // We would need to integrate a storage service like Firebase Storage.
       const { productImage, ...formData } = values;
 
-      await addDoc(collection(db, "croLeads"), {
+      const leadDataForDb = {
         ...formData,
         createdAt: serverTimestamp(),
-      });
+      };
+
+      await addDoc(collection(db, "croLeads"), leadDataForDb);
 
       // Call GenAI flow for email notification
-      await sendEnhancedEmailNotification(formData);
+      const budgetValue = parseFloat(formData.budget.replace(/[^0-9-]/g, '').split('-')[0]);
+      await sendEnhancedEmailNotification({
+        ...formData,
+        budget: isNaN(budgetValue) ? 0 : budgetValue,
+      });
 
       toast({
         title: "Inquiry Submitted!",
@@ -268,9 +281,34 @@ export function CROLeadForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>งบประมาณการทำ CRO (บาท)</FormLabel>
-                <FormControl>
-                  <Input type="number" placeholder="e.g., 500000" {...field} />
-                </FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a budget range" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="50000-100000">
+                      50,000 - 100,000
+                    </SelectItem>
+                    <SelectItem value="100001-150000">
+                      100,001 - 150,000
+                    </SelectItem>
+                    <SelectItem value="150001-200000">
+                      150,001 - 200,000
+                    </SelectItem>
+                    <SelectItem value="200001-500000">
+                      200,001 - 500,000
+                    </SelectItem>
+                    <SelectItem value="500001-1000000">
+                      500,001 - 1,000,000
+                    </SelectItem>
+                    <SelectItem value="1000001">&gt; 1,000,000</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
