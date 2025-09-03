@@ -20,23 +20,6 @@ export default function CROLeadPage() {
               </p>
             </div>
             
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="text-xl text-primary">Protocol</CardTitle>
-                <CardDescription>
-                  Details of the protocol for our CRO services.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ol className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
-                  <li>Consultation and Protocol Design: We work with you to design a study protocol that meets your product's needs.</li>
-                  <li>Volunteer Recruitment: We recruit volunteers that match the target group of your product.</li>
-                  <li>Product Testing: We conduct tests according to the designed protocol.</li>
-                  <li>Data Analysis and Report: We analyze the results and provide a comprehensive report.</li>
-                </ol>
-              </CardContent>
-            </Card>
-
             <Separator className="my-8" />
             
             <CROLeadForm />
