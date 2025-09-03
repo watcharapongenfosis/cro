@@ -21,6 +21,7 @@ async function getLeads() {
       budget: data.budget,
       interestedServices: data.interestedServices.join(", "),
       createdAt: data.createdAt.toDate().toLocaleString(),
+      appointmentDateTime: data.appointmentDateTime || "",
     };
   });
   return leadsList;
