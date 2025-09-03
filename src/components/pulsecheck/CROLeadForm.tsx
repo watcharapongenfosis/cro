@@ -25,7 +25,8 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db, storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import React, { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -148,12 +149,20 @@ export function CROLeadForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      // Note: File upload is not handled here.
-      // We would need to integrate a storage service like Firebase Storage.
+      let imageUrl = "";
+      const imageFile = values.productImage?.[0];
+
+      if (imageFile) {
+        const storageRef = ref(storage, `product_images/${Date.now()}_${imageFile.name}`);
+        const uploadResult = await uploadBytes(storageRef, imageFile);
+        imageUrl = await getDownloadURL(uploadResult.ref);
+      }
+      
       const { productImage, ...formData } = values;
 
       const leadDataForDb = {
         ...formData,
+        productImageUrl: imageUrl,
         createdAt: serverTimestamp(),
       };
 
@@ -245,17 +254,21 @@ export function CROLeadForm() {
         <FormField
           control={form.control}
           name="productImage"
-          render={({ field }) => (
+          render={({ field: { onChange, value, ...rest } }) => (
             <FormItem>
               <FormLabel>แนบรูปผลิตภัณฑ์</FormLabel>
               <FormControl>
                 <Input
                   type="file"
-                  onChange={(e) => field.onChange(e.target.files)}
+                  accept="image/*"
+                  onChange={(e) => {
+                    onChange(e.target.files);
+                  }}
+                  {...rest}
                 />
               </FormControl>
               <FormDescription>
-                Attach an image of your product (optional).
+                Attach an image of your product.
               </FormDescription>
               <FormMessage />
             </FormItem>
