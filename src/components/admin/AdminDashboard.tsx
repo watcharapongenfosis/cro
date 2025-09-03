@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface Lead {
   id: string;
+  participantName: string;
   companyName: string;
   contactNumber: string;
   email: string;
@@ -94,7 +95,8 @@ export function AdminDashboard({ leads: initialLeads }: AdminDashboardProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Company Name</TableHead>
+              <TableHead>Participant Name</TableHead>
+              <TableHead>Company/Brand Name</TableHead>
               <TableHead>Contact Number</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Product Info</TableHead>
@@ -107,6 +109,7 @@ export function AdminDashboard({ leads: initialLeads }: AdminDashboardProps) {
           <TableBody>
             {leads.map((lead) => (
               <TableRow key={lead.id}>
+                <TableCell>{lead.participantName}</TableCell>
                 <TableCell>{lead.companyName}</TableCell>
                 <TableCell>{lead.contactNumber}</TableCell>
                 <TableCell>{lead.email}</TableCell>
