@@ -1,5 +1,7 @@
 import { CROLeadForm } from "@/components/pulsecheck/CROLeadForm";
 import { GenfosisLogo } from "@/components/icons/logo";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function CROLeadPage() {
   return (
@@ -8,7 +10,7 @@ export default function CROLeadPage() {
         <div className="rounded-lg border bg-card text-card-foreground shadow-lg">
           <div className="p-8">
             <div className="flex flex-col items-center text-center">
-              <GenfosisLogo className="h-auto w-40" />
+              <GenfosisLogo className="h-auto w-48" />
               <h1 className="font-headline mt-4 text-3xl font-bold text-primary">
                 CRO Services Inquiry
               </h1>
@@ -17,6 +19,26 @@ export default function CROLeadPage() {
                 needs.
               </p>
             </div>
+            
+            <Card className="mb-8">
+              <CardHeader>
+                <CardTitle className="text-xl text-primary">Protocol</CardTitle>
+                <CardDescription>
+                  Details of the protocol for our CRO services.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ol className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
+                  <li>Consultation and Protocol Design: We work with you to design a study protocol that meets your product's needs.</li>
+                  <li>Volunteer Recruitment: We recruit volunteers that match the target group of your product.</li>
+                  <li>Product Testing: We conduct tests according to the designed protocol.</li>
+                  <li>Data Analysis and Report: We analyze the results and provide a comprehensive report.</li>
+                </ol>
+              </CardContent>
+            </Card>
+
+            <Separator className="my-8" />
+            
             <CROLeadForm />
           </div>
         </div>
