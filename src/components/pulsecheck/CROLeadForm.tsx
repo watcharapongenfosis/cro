@@ -42,6 +42,7 @@ import {
   WandSparkles,
   Loader2,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 // Service definitions with icons
 const croServices: {
@@ -130,6 +131,7 @@ const formSchema = z.object({
 
 export function CROLeadForm() {
   const { toast } = useToast();
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -165,11 +167,7 @@ export function CROLeadForm() {
         budget: isNaN(budgetValue) ? 0 : budgetValue,
       });
 
-      toast({
-        title: "Inquiry Submitted!",
-        description:
-          "Thank you for your interest. We will get back to you shortly.",
-      });
+      router.push("/thank-you");
       form.reset();
     } catch (error) {
       console.error("Error submitting form: ", error);
