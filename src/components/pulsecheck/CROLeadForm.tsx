@@ -25,8 +25,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db, storage } from "@/lib/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db } from "@/lib/firebase";
 import React, { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -120,7 +119,6 @@ const formSchema = z.object({
   contactNumber: z.string().min(1, "Contact number is required"),
   email: z.string().email("Invalid email address"),
   productInfo: z.string().min(1, "Product information is required"),
-  productImage: z.any().optional(),
   budget: z.string().min(1, "Budget is required"),
   interestedServices: z
     .array(z.string())
@@ -149,20 +147,8 @@ export function CROLeadForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      let imageUrl = "";
-      const imageFile = values.productImage?.[0];
-
-      if (imageFile) {
-        const storageRef = ref(storage, `product_images/${Date.now()}_${imageFile.name}`);
-        const uploadResult = await uploadBytes(storageRef, imageFile);
-        imageUrl = await getDownloadURL(uploadResult.ref);
-      }
-      
-      const { productImage, ...formData } = values;
-
       const leadDataForDb = {
-        ...formData,
-        productImageUrl: imageUrl,
+        ...values,
         createdAt: serverTimestamp(),
       };
 
@@ -246,30 +232,6 @@ export function CROLeadForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="productImage"
-          render={({ field: { onChange, value, ...rest } }) => (
-            <FormItem>
-              <FormLabel>แนบรูปผลิตภัณฑ์</FormLabel>
-              <FormControl>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    onChange(e.target.files);
-                  }}
-                  {...rest}
-                />
-              </FormControl>
-              <FormDescription>
-                Attach an image of your product.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

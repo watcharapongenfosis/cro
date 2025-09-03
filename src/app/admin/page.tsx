@@ -18,7 +18,6 @@ async function getLeads() {
       contactNumber: data.contactNumber,
       email: data.email,
       productInfo: data.productInfo,
-      productImageUrl: data.productImageUrl || "",
       budget: data.budget,
       interestedServices: data.interestedServices.join(", "),
       createdAt: data.createdAt.toDate().toLocaleString(),

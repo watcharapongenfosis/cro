@@ -13,10 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Download, Save } from "lucide-react";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
-import Link from "next/link";
 
 interface Lead {
   id: string;
@@ -24,7 +23,6 @@ interface Lead {
   contactNumber: string;
   email: string;
   productInfo: string;
-  productImageUrl: string;
   budget: string;
   interestedServices: string;
   createdAt: string;
@@ -100,7 +98,6 @@ export function AdminDashboard({ leads: initialLeads }: AdminDashboardProps) {
               <TableHead>Contact Number</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Product Info</TableHead>
-              <TableHead>Product Image</TableHead>
               <TableHead>Budget</TableHead>
               <TableHead>Interested Services</TableHead>
               <TableHead>Submitted At</TableHead>
@@ -114,13 +111,6 @@ export function AdminDashboard({ leads: initialLeads }: AdminDashboardProps) {
                 <TableCell>{lead.contactNumber}</TableCell>
                 <TableCell>{lead.email}</TableCell>
                 <TableCell className="max-w-xs truncate">{lead.productInfo}</TableCell>
-                <TableCell>
-                  {lead.productImageUrl && (
-                    <Link href={lead.productImageUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                      View Image
-                    </Link>
-                  )}
-                </TableCell>
                 <TableCell>{lead.budget}</TableCell>
                 <TableCell className="max-w-xs truncate">{lead.interestedServices}</TableCell>
                 <TableCell>{lead.createdAt}</TableCell>
