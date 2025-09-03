@@ -115,7 +115,8 @@ const croServices: {
 ];
 
 const formSchema = z.object({
-  companyName: z.string().min(1, "Company name is required"),
+  participantName: z.string().min(1, "Participant name is required"),
+  companyName: z.string().min(1, "Company/Brand name is required"),
   contactNumber: z.string().min(1, "Contact number is required"),
   email: z.string().email("Invalid email address"),
   productInfo: z.string().min(1, "Product information is required"),
@@ -135,6 +136,7 @@ export function CROLeadForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      participantName: "",
       companyName: "",
       contactNumber: "",
       email: "",
@@ -175,17 +177,33 @@ export function CROLeadForm() {
         <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
           <FormField
             control={form.control}
-            name="companyName"
+            name="participantName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ชื่อผู้ประกอบการ</FormLabel>
+                <FormLabel>ชื่อ-สกุล ผู้เข้าร่วม</FormLabel>
                 <FormControl>
-                  <Input placeholder="Your company name" {...field} />
+                  <Input placeholder="Your full name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="companyName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ชื่อบริษัท/ชื่อแบรนด์</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your company or brand name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+         <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
           <FormField
             control={form.control}
             name="contactNumber"
@@ -199,25 +217,24 @@ export function CROLeadForm() {
               </FormItem>
             )}
           />
+           <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>อีเมล</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="e.g., contact@company.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>อีเมล</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="e.g., contact@company.com"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={form.control}
