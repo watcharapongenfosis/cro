@@ -3,7 +3,7 @@ import * as React from "react";
 
 export const GenfosisLogo = (props: { className?: string }) => (
   <Image
-    src="https://drive.google.com/file/d/1RZ_bVX4Hsgg56SL42zlh7ZXuKNzZbbRx/view?usp=sharing"
+    src="https://drive.google.com/uc?export=download&id=1RZ_bVX4Hsgg56SL42zlh7ZXuKNzZbbRx"
     alt="Genfosis Logo"
     width={150}
     height={40}
