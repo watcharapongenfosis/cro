@@ -10,7 +10,6 @@ const CROLeadDetailsSchema = z.object({
   email: z.string().email(),
   productInfo: z.string(),
   budget: z.number(),
-  appointmentTime: z.string(),
   interestedServices: z.array(z.string()),
 });
 
@@ -30,7 +29,7 @@ const emailSummaryPrompt = ai.definePrompt({
   name: 'emailSummaryPrompt',
   input: {schema: CROLeadDetailsSchema},
   output: {schema: z.string()},
-  prompt: `You are an expert marketing assistant tasked with summarizing CRO lead inquiries for quick review.\n  Based on the following lead details, generate a concise summary (under 100 words) highlighting the key needs, \n  the products they are interested in, and the suggested convenient time for an appointment.\n\n  Company Name: {{{companyName}}}\n  Contact Number: {{{contactNumber}}}\n  Email: {{{email}}}\n  Product Information: {{{productInfo}}}\n  Budget: {{{budget}}}\n  Appointment Time: {{{appointmentTime}}}\n  Interested Services: {{#each interestedServices}}{{{this}}}, {{/each}}\n\n  Summary:`,
+  prompt: `You are an expert marketing assistant tasked with summarizing CRO lead inquiries for quick review.\n  Based on the following lead details, generate a concise summary (under 100 words) highlighting the key needs, \n  the products they are interested in, and their budget.\n\n  Company Name: {{{companyName}}}\n  Contact Number: {{{contactNumber}}}\n  Email: {{{email}}}\n  Product Information: {{{productInfo}}}\n  Budget: {{{budget}}}\n  Interested Services: {{#each interestedServices}}{{{this}}}, {{/each}}\n\n  Summary:`,
 });
 
 const enhancedEmailNotificationFlow = ai.defineFlow(

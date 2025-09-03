@@ -121,7 +121,6 @@ const formSchema = z.object({
   productInfo: z.string().min(1, "Product information is required"),
   productImage: z.any().optional(),
   budget: z.string().min(1, "Budget is required"),
-  appointmentTime: z.string().min(1, "Please suggest a convenient time"),
   interestedServices: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
@@ -141,7 +140,6 @@ export function CROLeadForm() {
       email: "",
       productInfo: "",
       budget: "",
-      appointmentTime: "",
       interestedServices: [],
     },
   });
@@ -274,7 +272,7 @@ export function CROLeadForm() {
           )}
         />
 
-        <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-8">
           <FormField
             control={form.control}
             name="budget"
@@ -309,19 +307,6 @@ export function CROLeadForm() {
                     <SelectItem value="1000001">&gt; 1,000,000</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="appointmentTime"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>เวลาที่สะดวกให้นัดหมาย</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g., Weekdays after 3 PM" {...field} />
-                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
