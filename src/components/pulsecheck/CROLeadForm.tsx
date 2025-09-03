@@ -247,7 +247,7 @@ export function CROLeadForm() {
           name="productImage"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>แนบรูปผลิตภัณฑ์ (ถ้ามี)</FormLabel>
+              <FormLabel>แนบรูปผลิตภัณฑ์</FormLabel>
               <FormControl>
                 <Input
                   type="file"
@@ -294,7 +294,7 @@ export function CROLeadForm() {
                     <SelectItem value="500001-1000000">
                       500,001 - 1,000,000
                     </SelectItem>
-                    <SelectItem value="1000001">&gt; 1,000,000</SelectItem>
+                    <SelectItem value="1000001">> 1,000,000</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
