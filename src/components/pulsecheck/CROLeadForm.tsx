@@ -26,7 +26,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { sendEnhancedEmailNotification } from "@/ai/flows/enhanced-email-notification-with-llm";
 import React, { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -159,13 +158,6 @@ export function CROLeadForm() {
       };
 
       await addDoc(collection(db, "croLeads"), leadDataForDb);
-
-      // Call GenAI flow for email notification
-      const budgetValue = parseFloat(formData.budget.replace(/[^0-9-]/g, '').split('-')[0]);
-      await sendEnhancedEmailNotification({
-        ...formData,
-        budget: isNaN(budgetValue) ? 0 : budgetValue,
-      });
 
       router.push("/thank-you");
       form.reset();
