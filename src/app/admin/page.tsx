@@ -14,6 +14,7 @@ async function getLeads() {
     const data = doc.data();
     return {
       id: doc.id,
+      participantName: data.participantName,
       companyName: data.companyName,
       contactNumber: data.contactNumber,
       email: data.email,
