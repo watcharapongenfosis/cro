@@ -12,11 +12,8 @@ export default function ThankYouPage() {
             <div className="flex justify-center mb-6">
                 <GenfosisLogo className="h-auto w-48" />
             </div>
-            <h1 className="font-headline mt-4 text-3xl font-bold text-primary">
-              ขอบคุณครับ!
-            </h1>
             <p className="mb-8 mt-2 text-lg text-muted-foreground">
-              ขอบคุณสำหรับข้อมูลครับ กรุณารับของที่ระลึกจากเจ้าหน้าที่ได้เลยครับ
+              แสดงหน้านี้ให้เจ้าหน้าที่เพื่อรับของที่ระลึก
             </p>
             <Button asChild className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
               <Link href="/">กลับไปหน้าแรก</Link>
