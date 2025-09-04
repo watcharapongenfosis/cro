@@ -12,7 +12,7 @@ export default function CROLeadPage() {
             <div className="flex flex-col items-center text-center">
               <GenfosisLogo className="h-auto w-48" />
               <h1 className="font-headline mt-4 text-3xl font-bold text-primary">
-                CRO Services Inquiry
+                BIOSMART TESTING Inquiry
               </h1>
               <p className="mb-6 mt-2 text-muted-foreground">
                 Please provide your information below to help us understand your
